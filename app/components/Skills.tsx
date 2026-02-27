@@ -60,8 +60,9 @@ export default function Skills() {
               initial={{ opacity: 0, x: -12 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.1 + i * 0.07 }}
+              whileHover={{ backgroundColor: "var(--paper-dark)" }}
               className="grid grid-cols-[180px_1fr] sm:grid-cols-[220px_1fr] items-start gap-0 py-5"
-              style={{ borderBottom: "1px solid var(--rule)" }}
+              style={{ borderBottom: "1px solid var(--rule)", transition: "background-color 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94)" }}
             >
               {/* Category label */}
               <div
@@ -69,25 +70,43 @@ export default function Skills() {
                 style={{ borderRight: "1px solid var(--rule)" }}
               >
                 <span
-                  className="text-xs font-semibold tracking-[0.18em] uppercase"
+                  className="text-xs font-semibold tracking-[0.2em] uppercase"
                   style={{ fontFamily: "var(--font-inter)", color: "var(--ink)" }}
                 >
                   {cat.category}
                 </span>
-                <div
-                  className="mt-1 folio"
-                  style={{ color: "var(--caption)" }}
-                >
-                  {cat.skills.length} items
+                {/* Boxed skill count badge */}
+                <div className="mt-1.5 inline-flex items-center gap-1">
+                  <span
+                    className="inline-block text-center"
+                    style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "0.6rem",
+                      color: "var(--paper)",
+                      backgroundColor: "var(--accent)",
+                      padding: "1px 5px",
+                      borderRadius: "2px",
+                      fontWeight: 700,
+                      letterSpacing: "0.05em",
+                    }}
+                  >
+                    {cat.skills.length}
+                  </span>
+                  <span className="folio" style={{ color: "var(--caption)" }}>items</span>
                 </div>
               </div>
 
               {/* Skills chips */}
               <div className="pl-6 flex flex-wrap gap-2 items-center">
                 {cat.skills.map((skill) => (
-                  <span key={skill} className="chip">
+                  <motion.span
+                    key={skill}
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 20 } as object}
+                    className="chip"
+                  >
                     {skill}
-                  </span>
+                  </motion.span>
                 ))}
               </div>
             </motion.div>

@@ -3,6 +3,15 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
+const courses = [
+  "Embedded Systems",
+  "Robotics & Automation",
+  "IoT Architectures",
+  "Signal Processing",
+  "Data Engineering",
+  "Applied ML",
+];
+
 export default function Education() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
@@ -43,13 +52,18 @@ export default function Education() {
           </h2>
         </motion.div>
 
-        {/* Editorial education card */}
+        {/* Editorial education card with hover lift */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.15 }}
+          whileHover={{ y: -4, boxShadow: "0 12px 32px rgba(0,0,0,0.06)" }}
           className="grid lg:grid-cols-[1fr_2fr] gap-0 max-w-4xl"
-          style={{ border: "1px solid var(--rule)", borderTop: "3px solid var(--accent)" }}
+          style={{
+            border: "1px solid var(--rule)",
+            borderTop: "4px solid var(--accent)",
+            transition: "box-shadow 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+          }}
         >
           {/* Left column — institution info */}
           <div
@@ -110,16 +124,12 @@ export default function Education() {
             </div>
 
             <div className="grid grid-cols-2 gap-0 mb-6">
-              {[
-                "Embedded Systems",
-                "Robotics & Automation",
-                "IoT Architectures",
-                "Signal Processing",
-                "Data Engineering",
-                "Applied ML",
-              ].map((course, i, arr) => (
-                <div
+              {courses.map((course, i, arr) => (
+                <motion.div
                   key={course}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.35, delay: 0.3 + i * 0.06, ease: "easeOut" }}
                   className="py-2.5 pr-4"
                   style={{
                     borderBottom: i < arr.length - 2 ? "1px solid var(--rule)" : "none",
@@ -136,7 +146,7 @@ export default function Education() {
                   >
                     {course}
                   </span>
-                </div>
+                </motion.div>
               ))}
             </div>
 

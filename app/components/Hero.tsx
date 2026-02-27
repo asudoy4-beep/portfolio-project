@@ -20,7 +20,7 @@ export default function Hero() {
 
   return (
     <section
-      className="relative pt-[220px] md:pt-[200px] pb-0 px-6 md:px-10 overflow-hidden"
+      className="relative pt-[240px] md:pt-[220px] pb-0 px-6 md:px-10 overflow-hidden"
       style={{ backgroundColor: "var(--paper)" }}
     >
       {/* Subtle paper texture lines */}
@@ -51,11 +51,11 @@ export default function Hero() {
           </span>
           <span style={{ color: "var(--rule)", fontSize: "1rem" }}>—</span>
           <span className="inline-flex items-center gap-1.5 text-xs"
-            style={{ fontFamily: "var(--font-inter)", color: "var(--accent)", fontWeight: 500 }}
+            style={{ fontFamily: "var(--font-inter)", color: "#16a34a", fontWeight: 500 }}
           >
             <span
               className="w-1.5 h-1.5 rounded-full animate-pulse"
-              style={{ backgroundColor: "var(--accent)" }}
+              style={{ backgroundColor: "#22c55e" }}
             />
             Available for opportunities
           </span>
@@ -80,7 +80,7 @@ export default function Hero() {
             >
               Ahmed
               <br />
-              <span style={{ color: "var(--accent)" }}>Shahariar</span>
+              <span className="accent-underline" style={{ color: "var(--accent)" }}>Shahariar</span>
               <br />
               Udoy
             </motion.h1>
@@ -111,11 +111,14 @@ export default function Hero() {
             initial="hidden"
             animate="visible"
             variants={fadeIn}
+            whileHover={{ y: -2, boxShadow: "0 8px 24px rgba(0,0,0,0.07)" }}
+            transition={{ type: "spring", stiffness: 300, damping: 24 } as object}
             className="hidden lg:flex flex-col gap-3 mb-2 ml-12 shrink-0"
             style={{
               borderLeft: "3px solid var(--ink)",
               paddingLeft: "1.5rem",
               width: "220px",
+              cursor: "default",
             }}
           >
             <div>
@@ -169,9 +172,12 @@ export default function Hero() {
         >
           {/* CTA */}
           <div className="flex items-center gap-3">
-            <button
+            <motion.button
               onClick={() => scrollTo("#projects")}
-              className="flex items-center gap-2 transition-opacity hover:opacity-70 text-sm"
+              whileHover={{ y: -1, boxShadow: "0 4px 16px rgba(13,13,13,0.18)" }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 400, damping: 20 } as object}
+              className="flex items-center gap-2 text-sm"
               style={{
                 fontFamily: "var(--font-inter)",
                 color: "var(--paper)",
@@ -179,14 +185,19 @@ export default function Hero() {
                 padding: "0.65rem 1.4rem",
                 fontWeight: 500,
                 letterSpacing: "0.05em",
+                border: "none",
+                cursor: "pointer",
               }}
             >
               Read Projects
               <ArrowRight size={14} />
-            </button>
-            <button
+            </motion.button>
+            <motion.button
               onClick={() => scrollTo("#contact")}
-              className="flex items-center gap-2 transition-opacity hover:opacity-70 text-sm"
+              whileHover={{ y: -1, boxShadow: "0 4px 12px rgba(13,13,13,0.1)" }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 400, damping: 20 } as object}
+              className="flex items-center gap-2 text-sm"
               style={{
                 fontFamily: "var(--font-inter)",
                 color: "var(--ink)",
@@ -195,39 +206,43 @@ export default function Hero() {
                 padding: "0.65rem 1.4rem",
                 fontWeight: 500,
                 letterSpacing: "0.05em",
+                cursor: "pointer",
               }}
             >
               Contact
               <Mail size={14} />
-            </button>
+            </motion.button>
           </div>
 
           {/* Socials */}
           <div className="flex items-center gap-5">
-            <a
+            <motion.a
               href="#"
               aria-label="GitHub"
-              className="transition-opacity hover:opacity-50"
-              style={{ color: "var(--muted)" }}
+              whileHover={{ scale: 1.15 }}
+              transition={{ type: "spring", stiffness: 400, damping: 18 } as object}
+              style={{ color: "var(--muted)", display: "flex" }}
             >
-              <Github size={18} />
-            </a>
-            <a
+              <Github size={20} />
+            </motion.a>
+            <motion.a
               href="#"
               aria-label="LinkedIn"
-              className="transition-opacity hover:opacity-50"
-              style={{ color: "var(--muted)" }}
+              whileHover={{ scale: 1.15 }}
+              transition={{ type: "spring", stiffness: 400, damping: 18 } as object}
+              style={{ color: "var(--muted)", display: "flex" }}
             >
-              <Linkedin size={18} />
-            </a>
-            <a
+              <Linkedin size={20} />
+            </motion.a>
+            <motion.a
               href="mailto:shahariar0001@std.bdu.ac.bd"
               aria-label="Email"
-              className="transition-opacity hover:opacity-50"
-              style={{ color: "var(--muted)" }}
+              whileHover={{ scale: 1.15 }}
+              transition={{ type: "spring", stiffness: 400, damping: 18 } as object}
+              style={{ color: "var(--muted)", display: "flex" }}
             >
-              <Mail size={18} />
-            </a>
+              <Mail size={20} />
+            </motion.a>
           </div>
         </motion.div>
 

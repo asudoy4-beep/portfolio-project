@@ -11,6 +11,7 @@ export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [focusedField, setFocusedField] = useState<string | null>(null);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -60,6 +61,20 @@ export default function Contact() {
           >
             Get in Touch
           </h2>
+
+          {/* Stats inline badge */}
+          <div className="mt-3 flex items-center gap-3">
+            <span
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.65rem",
+                color: "var(--muted)",
+                letterSpacing: "0.08em",
+              }}
+            >
+              4 Projects · 6+ Technologies · Open to global opportunities
+            </span>
+          </div>
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-0">
@@ -105,13 +120,16 @@ export default function Contact() {
                 { icon: Github, label: "GitHub", value: "View repositories", href: "#" },
                 { icon: Linkedin, label: "LinkedIn", value: "Professional network", href: "#" },
               ].map(({ icon: Icon, label, value, href }, i) => (
-                <a
+                <motion.a
                   key={label}
                   href={href}
-                  className="flex items-center gap-4 py-4 transition-opacity hover:opacity-60"
+                  whileHover={{ x: 4 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 24 } as object}
+                  className="flex items-center gap-4 py-4"
                   style={{
                     borderBottom: i < 2 ? "1px solid var(--rule)" : "none",
                     textDecoration: "none",
+                    display: "flex",
                   }}
                 >
                   <Icon size={16} style={{ color: "var(--muted)", flexShrink: 0 }} />
@@ -128,7 +146,17 @@ export default function Contact() {
                       {value}
                     </div>
                   </div>
-                </a>
+                  <span
+                    style={{
+                      marginLeft: "auto",
+                      color: "var(--rule)",
+                      fontSize: "0.8rem",
+                      fontFamily: "var(--font-inter)",
+                    }}
+                  >
+                    →
+                  </span>
+                </motion.a>
               ))}
             </div>
           </motion.div>
@@ -175,8 +203,11 @@ export default function Contact() {
                 ].map((field, i) => (
                   <div
                     key={field.id}
-                    className="py-4"
-                    style={{ borderBottom: "1px solid var(--rule)", borderTop: i === 0 ? "2px solid var(--ink)" : "none" }}
+                    className="py-4 relative"
+                    style={{
+                      borderBottom: "none",
+                      borderTop: i === 0 ? "2px solid var(--ink)" : "none",
+                    }}
                   >
                     <label
                       htmlFor={field.id}
@@ -191,6 +222,8 @@ export default function Contact() {
                       required
                       value={form[field.id as "name" | "email"]}
                       onChange={handleChange}
+                      onFocus={() => setFocusedField(field.id)}
+                      onBlur={() => setFocusedField(null)}
                       placeholder={field.placeholder}
                       className="w-full bg-transparent focus:outline-none"
                       style={{
@@ -198,14 +231,38 @@ export default function Contact() {
                         fontSize: "1rem",
                         color: "var(--ink)",
                         border: "none",
+                        paddingBottom: "4px",
                       }}
                     />
+                    {/* Animated underline */}
+                    <div
+                      style={{
+                        position: "relative",
+                        height: "1px",
+                        backgroundColor: "var(--rule)",
+                        marginTop: "2px",
+                      }}
+                    >
+                      <motion.div
+                        animate={{ scaleX: focusedField === field.id ? 1 : 0 }}
+                        initial={{ scaleX: 0 }}
+                        transition={{ duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
+                        style={{
+                          position: "absolute",
+                          left: 0,
+                          top: 0,
+                          right: 0,
+                          bottom: 0,
+                          backgroundColor: "var(--accent)",
+                          transformOrigin: "left",
+                        }}
+                      />
+                    </div>
                   </div>
                 ))}
 
                 <div
-                  className="py-4"
-                  style={{ borderBottom: "1px solid var(--rule)" }}
+                  className="py-4 relative"
                 >
                   <label
                     htmlFor="message"
@@ -220,6 +277,8 @@ export default function Contact() {
                     rows={5}
                     value={form.message}
                     onChange={handleChange}
+                    onFocus={() => setFocusedField("message")}
+                    onBlur={() => setFocusedField(null)}
                     placeholder="Tell me about the opportunity or project..."
                     className="w-full bg-transparent focus:outline-none resize-none"
                     style={{
@@ -227,15 +286,43 @@ export default function Contact() {
                       fontSize: "1rem",
                       color: "var(--ink)",
                       border: "none",
+                      paddingBottom: "4px",
                     }}
                   />
+                  {/* Animated underline */}
+                  <div
+                    style={{
+                      position: "relative",
+                      height: "1px",
+                      backgroundColor: "var(--rule)",
+                      marginTop: "2px",
+                    }}
+                  >
+                    <motion.div
+                      animate={{ scaleX: focusedField === "message" ? 1 : 0 }}
+                      initial={{ scaleX: 0 }}
+                      transition={{ duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
+                      style={{
+                        position: "absolute",
+                        left: 0,
+                        top: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: "var(--accent)",
+                        transformOrigin: "left",
+                      }}
+                    />
+                  </div>
                 </div>
 
                 <div className="pt-5">
-                  <button
+                  <motion.button
                     type="submit"
                     disabled={loading}
-                    className="flex items-center gap-2 transition-opacity hover:opacity-70 disabled:opacity-40"
+                    whileHover={!loading ? { scale: 1.01 } : {}}
+                    whileTap={!loading ? { scale: 0.98 } : {}}
+                    transition={{ type: "spring", stiffness: 400, damping: 20 } as object}
+                    className="flex items-center gap-2 disabled:opacity-40"
                     style={{
                       fontFamily: "var(--font-inter)",
                       fontSize: "0.75rem",
@@ -246,7 +333,7 @@ export default function Contact() {
                       backgroundColor: "var(--ink)",
                       border: "none",
                       padding: "0.75rem 2rem",
-                      cursor: "pointer",
+                      cursor: loading ? "default" : "pointer",
                     }}
                   >
                     {loading ? (
@@ -263,7 +350,7 @@ export default function Contact() {
                         <Send size={13} />
                       </>
                     )}
-                  </button>
+                  </motion.button>
                 </div>
               </form>
             )}

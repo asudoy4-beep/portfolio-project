@@ -17,6 +17,11 @@
   --rule: #c8bfaa;
   --muted: #7a7060;
   --caption: #9e9282;
+
+  /* Spacing & motion tokens */
+  --section-py: clamp(5rem, 8vw, 7rem);
+  --ease-spring: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-base: 250ms var(--ease-spring);
 }
 
 * {
@@ -118,6 +123,13 @@ hr.thick { border: none; border-top: 2px solid var(--ink); }
   color: var(--muted);
   padding: 2px 8px;
   border-radius: 2px;
+  display: inline-block;
+  transition: background var(--transition-base), border-color var(--transition-base), color var(--transition-base);
+}
+
+.chip:hover {
+  background: var(--paper-dark);
+  border-color: var(--muted);
 }
 
 .chip-accent {
@@ -125,13 +137,98 @@ hr.thick { border: none; border-top: 2px solid var(--ink); }
   color: var(--accent);
 }
 
-.article-card { transition: background 0.2s; }
-.article-card:hover { background: var(--paper-dark); }
+.chip-accent:hover {
+  background: rgba(181, 50, 26, 0.06);
+}
+
+/* Filled chip — for featured project tech stack */
+.chip-filled {
+  font-family: var(--font-inter);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--paper);
+  border: 1px solid var(--ink);
+  padding: 2px 8px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+/* Featured badge — pill stamp */
+.featured-badge {
+  font-family: var(--font-inter);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--accent);
+  padding: 3px 10px;
+  border-radius: 2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Article card — base interaction */
+.article-card {
+  transition: background var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Featured card — stronger hover treatment */
+.featured-card {
+  transition: background var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.featured-card:hover {
+  background: var(--paper-dark);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+}
+
+/* Section enter animation */
+@keyframes section-enter {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.section-enter {
+  animation: section-enter 0.6s var(--ease-spring) forwards;
+}
+
+/* Animated rule — draws in from left */
+@keyframes rule-draw {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+.rule-animated {
+  animation: rule-draw 0.6s var(--ease-spring) forwards;
+}
+
+/* Accent underline sweep */
+@keyframes underline-sweep {
+  from { background-size: 0% 3px; }
+  to   { background-size: 100% 3px; }
+}
+
+.accent-underline {
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 3px;
+  padding-bottom: 2px;
+}
 
 /* Custom scrollbar */
-::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--paper); }
-::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 3px; transition: background 0.2s; }
 ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
 
 /* Focus styles */
@@ -139,4 +236,10 @@ hr.thick { border: none; border-top: 2px solid var(--ink); }
   outline: 2px solid var(--accent);
   outline-offset: 2px;
   border-radius: 2px;
+}
+
+/* Nav active indicator */
+.nav-active {
+  color: var(--accent) !important;
+  opacity: 1 !important;
 }

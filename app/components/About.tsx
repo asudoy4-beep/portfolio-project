@@ -7,6 +7,15 @@ export default function About() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
+  const sidebarItems = [
+    { label: "Focus Area", value: "Embedded Systems & IoT" },
+    { label: "Hardware", value: "ESP32, Sensors, Microcontrollers" },
+    { label: "Cloud", value: "ThingSpeak · Firebase · MQTT" },
+    { label: "Intelligence", value: "ML · Python · Data Analysis" },
+    { label: "Location", value: "Bangladesh" },
+    { label: "Status", value: "Open to Opportunities" },
+  ];
+
   return (
     <section
       id="about"
@@ -53,7 +62,7 @@ export default function About() {
             initial={{ opacity: 0, y: 16 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="lg:pr-8"
+            className="lg:pr-10 pb-8 lg:pb-0"
             style={{ borderRight: "1px solid var(--rule)" }}
           >
             <p
@@ -81,14 +90,16 @@ export default function About() {
             initial={{ opacity: 0, y: 16 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="lg:px-8"
-            style={{ borderRight: "1px solid var(--rule)" }}
+            className="lg:px-10 pb-8 lg:pb-0 pt-8 lg:pt-0"
+            style={{ borderRight: "1px solid var(--rule)", borderTop: "1px solid var(--rule)" }}
           >
-            <blockquote
+            <motion.blockquote
+              whileHover={{ scale: 1.01 }}
+              transition={{ type: "spring", stiffness: 300, damping: 24 } as object}
               className="pull-quote mb-6"
             >
               &ldquo;Building global-standard intelligent systems from Bangladesh — at the frontier of IoT and embedded intelligence.&rdquo;
-            </blockquote>
+            </motion.blockquote>
             <p
               style={{ fontFamily: "var(--font-garamond)", color: "var(--muted)", fontSize: "1.05rem" }}
             >
@@ -99,14 +110,15 @@ export default function About() {
             </p>
           </motion.div>
 
-          {/* Col 3 — sidebar: quick facts */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="lg:pl-8 mt-8 lg:mt-0"
+          {/* Col 3 — sidebar: quick facts with staggered entrance */}
+          <div
+            className="lg:pl-10 pt-8 lg:pt-0"
+            style={{ borderTop: "1px solid var(--rule)" }}
           >
-            <div
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.3 }}
               className="mb-4 pb-2"
               style={{ borderBottom: "2px solid var(--ink)" }}
             >
@@ -116,18 +128,14 @@ export default function About() {
               >
                 At a Glance
               </span>
-            </div>
+            </motion.div>
 
-            {[
-              { label: "Focus Area", value: "Embedded Systems & IoT" },
-              { label: "Hardware", value: "ESP32, Sensors, Microcontrollers" },
-              { label: "Cloud", value: "ThingSpeak · Firebase · MQTT" },
-              { label: "Intelligence", value: "ML · Python · Data Analysis" },
-              { label: "Location", value: "Bangladesh" },
-              { label: "Status", value: "Open to Opportunities" },
-            ].map(({ label, value }, i, arr) => (
-              <div
+            {sidebarItems.map(({ label, value }, i, arr) => (
+              <motion.div
                 key={label}
+                initial={{ opacity: 0, x: 10 }}
+                animate={inView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.4, delay: 0.35 + i * 0.06, ease: "easeOut" }}
                 className="py-3 flex justify-between items-start gap-3"
                 style={{
                   borderBottom: i < arr.length - 1 ? "1px solid var(--rule)" : "none",
@@ -151,9 +159,9 @@ export default function About() {
                 >
                   {value}
                 </span>
-              </div>
+              </motion.div>
             ))}
-          </motion.div>
+          </div>
         </div>
 
         {/* Bottom rule */}
