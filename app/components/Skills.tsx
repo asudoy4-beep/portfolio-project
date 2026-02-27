@@ -9,53 +9,83 @@ export default function Skills() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="skills" className="py-28 px-6">
-      <div className="max-w-6xl mx-auto" ref={ref}>
-        {/* Section label */}
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
+    <section
+      id="skills"
+      className="py-20 px-6 md:px-10"
+      style={{ backgroundColor: "var(--paper)" }}
+    >
+      <div className="max-w-7xl mx-auto" ref={ref}>
+
+        {/* Section header */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="text-blue-400 text-sm font-medium uppercase tracking-widest mb-3"
+          className="mb-10"
         >
-          Skills
-        </motion.p>
+          <div
+            className="flex items-center gap-4 mb-2"
+            style={{ borderTop: "3px solid var(--ink)", paddingTop: "6px" }}
+          >
+            <span className="kicker">Technical Arsenal</span>
+            <span style={{ color: "var(--rule)" }}>·</span>
+            <span className="folio">Section III</span>
+          </div>
+          <h2
+            style={{
+              fontFamily: "var(--font-playfair)",
+              fontWeight: 700,
+              fontSize: "clamp(2rem, 5vw, 3.2rem)",
+              color: "var(--ink)",
+              lineHeight: 1.1,
+            }}
+          >
+            Technical Toolkit
+          </h2>
+          <p
+            className="mt-2"
+            style={{ fontFamily: "var(--font-garamond)", fontSize: "1.1rem", color: "var(--muted)", fontStyle: "italic" }}
+          >
+            Technologies deployed to build intelligent, connected systems.
+          </p>
+        </motion.div>
 
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-3xl md:text-4xl font-bold text-white mb-3"
+        {/* Skills table — editorial catalog layout */}
+        <div
+          style={{ borderTop: "2px solid var(--ink)" }}
         >
-          Technical toolkit
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.15 }}
-          className="text-slate-500 mb-14 max-w-xl"
-        >
-          Technologies I use to build intelligent, connected systems.
-        </motion.p>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {skillCategories.map((cat, i) => (
             <motion.div
               key={cat.category}
-              initial={{ opacity: 0, y: 24 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.2 + i * 0.08 }}
-              className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-6 hover:border-blue-500/20 hover:bg-white/[0.04] transition-all duration-300"
+              initial={{ opacity: 0, x: -12 }}
+              animate={inView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.1 + i * 0.07 }}
+              className="grid grid-cols-[180px_1fr] sm:grid-cols-[220px_1fr] items-start gap-0 py-5"
+              style={{ borderBottom: "1px solid var(--rule)" }}
             >
-              <h3 className="text-white font-semibold text-sm mb-4">
-                {cat.category}
-              </h3>
-              <div className="flex flex-wrap gap-2">
+              {/* Category label */}
+              <div
+                className="pr-6"
+                style={{ borderRight: "1px solid var(--rule)" }}
+              >
+                <span
+                  className="text-xs font-semibold tracking-[0.18em] uppercase"
+                  style={{ fontFamily: "var(--font-inter)", color: "var(--ink)" }}
+                >
+                  {cat.category}
+                </span>
+                <div
+                  className="mt-1 folio"
+                  style={{ color: "var(--caption)" }}
+                >
+                  {cat.skills.length} items
+                </div>
+              </div>
+
+              {/* Skills chips */}
+              <div className="pl-6 flex flex-wrap gap-2 items-center">
                 {cat.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="text-xs text-slate-300 bg-white/[0.05] border border-white/[0.08] rounded-md px-2.5 py-1.5 font-medium"
-                  >
+                  <span key={skill} className="chip">
                     {skill}
                   </span>
                 ))}
@@ -63,6 +93,15 @@ export default function Skills() {
             </motion.div>
           ))}
         </div>
+
+        {/* Bottom rule */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="mt-4"
+          style={{ borderTop: "3px solid var(--ink)", borderBottom: "1px solid var(--rule)", paddingTop: "4px", paddingBottom: "3px" }}
+        />
       </div>
     </section>
   );

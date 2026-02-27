@@ -4,12 +4,12 @@ import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { ArrowRight, Mail, Github, Linkedin } from "lucide-react";
 
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 24 },
+const fadeIn: Variants = {
+  hidden: { opacity: 0, y: 16 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.1, duration: 0.6, ease: "easeOut" as const },
+    transition: { delay: i * 0.12, duration: 0.7, ease: "easeOut" as const },
   }),
 };
 
@@ -19,156 +19,221 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background grid */}
+    <section
+      className="relative pt-[220px] md:pt-[200px] pb-0 px-6 md:px-10 overflow-hidden"
+      style={{ backgroundColor: "var(--paper)" }}
+    >
+      {/* Subtle paper texture lines */}
       <div
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute inset-0 pointer-events-none opacity-[0.04]"
         style={{
-          backgroundImage:
-            "linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
+          backgroundImage: "repeating-linear-gradient(transparent, transparent 27px, var(--ink) 27px, var(--ink) 28px)",
         }}
       />
 
-      {/* Gradient orb */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-blue-600/10 blur-[120px] pointer-events-none" />
+      <div className="max-w-7xl mx-auto relative z-10">
 
-      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-        {/* Eyebrow */}
+        {/* Top kicker row */}
         <motion.div
           custom={0}
           initial="hidden"
           animate="visible"
-          variants={fadeUp}
-          className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-1.5 text-xs text-blue-400 font-medium mb-8 tracking-wide uppercase"
+          variants={fadeIn}
+          className="flex items-center gap-4 mb-6"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
-          Available for opportunities
+          <span className="kicker">Cover Story</span>
+          <span style={{ color: "var(--rule)", fontSize: "1rem" }}>—</span>
+          <span
+            className="text-xs tracking-widest uppercase"
+            style={{ fontFamily: "var(--font-inter)", color: "var(--muted)" }}
+          >
+            Issue No. 1 · 2024
+          </span>
+          <span style={{ color: "var(--rule)", fontSize: "1rem" }}>—</span>
+          <span className="inline-flex items-center gap-1.5 text-xs"
+            style={{ fontFamily: "var(--font-inter)", color: "var(--accent)", fontWeight: 500 }}
+          >
+            <span
+              className="w-1.5 h-1.5 rounded-full animate-pulse"
+              style={{ backgroundColor: "var(--accent)" }}
+            />
+            Available for opportunities
+          </span>
         </motion.div>
 
-        {/* Name */}
-        <motion.h1
-          custom={1}
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-          className="text-5xl md:text-7xl font-bold text-white tracking-tight mb-4"
-        >
-          Ahmed Shahariar
-          <br />
-          <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-            Udoy
-          </span>
-        </motion.h1>
+        {/* Main headline — big magazine cover type */}
+        <div className="grid lg:grid-cols-[1fr_auto] gap-0 items-end">
+          <div>
+            <motion.h1
+              custom={1}
+              initial="hidden"
+              animate="visible"
+              variants={fadeIn}
+              className="leading-none tracking-tight mb-0"
+              style={{
+                fontFamily: "var(--font-playfair)",
+                fontWeight: 900,
+                fontSize: "clamp(3.5rem, 10vw, 8rem)",
+                color: "var(--ink)",
+                lineHeight: 0.9,
+              }}
+            >
+              Ahmed
+              <br />
+              <span style={{ color: "var(--accent)" }}>Shahariar</span>
+              <br />
+              Udoy
+            </motion.h1>
 
-        {/* Role */}
-        <motion.p
-          custom={2}
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-          className="text-slate-400 text-lg md:text-xl font-medium mb-6"
-        >
-          IoT & Robotics Engineering Student &nbsp;·&nbsp; Intelligent Systems
-          Developer
-        </motion.p>
+            {/* Deck / subtitle */}
+            <motion.p
+              custom={2}
+              initial="hidden"
+              animate="visible"
+              variants={fadeIn}
+              className="mt-6 mb-0 max-w-2xl"
+              style={{
+                fontFamily: "var(--font-garamond)",
+                fontSize: "1.25rem",
+                color: "var(--muted)",
+                lineHeight: 1.6,
+                fontStyle: "italic",
+              }}
+            >
+              IoT &amp; Robotics Engineering Student · Intelligent Systems Developer ·
+              Building sensor-driven, cloud-connected hardware that senses, thinks, and acts.
+            </motion.p>
+          </div>
 
-        {/* Headline */}
-        <motion.p
-          custom={3}
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-          className="text-slate-300 text-xl md:text-2xl font-light leading-relaxed max-w-2xl mx-auto mb-4"
-        >
-          I design and build intelligent monitoring systems using IoT, embedded
-          hardware, and machine learning.
-        </motion.p>
+          {/* Side column — issue info box */}
+          <motion.div
+            custom={3}
+            initial="hidden"
+            animate="visible"
+            variants={fadeIn}
+            className="hidden lg:flex flex-col gap-3 mb-2 ml-12 shrink-0"
+            style={{
+              borderLeft: "3px solid var(--ink)",
+              paddingLeft: "1.5rem",
+              width: "220px",
+            }}
+          >
+            <div>
+              <div className="kicker mb-1">Specialization</div>
+              <div style={{ fontFamily: "var(--font-inter)", fontSize: "0.8rem", color: "var(--ink)", fontWeight: 500 }}>
+                Embedded Systems
+              </div>
+            </div>
+            <hr className="thin" />
+            <div>
+              <div className="kicker mb-1">Platform</div>
+              <div style={{ fontFamily: "var(--font-inter)", fontSize: "0.8rem", color: "var(--ink)", fontWeight: 500 }}>
+                ESP32 · ThingSpeak · Firebase
+              </div>
+            </div>
+            <hr className="thin" />
+            <div>
+              <div className="kicker mb-1">Focus</div>
+              <div style={{ fontFamily: "var(--font-inter)", fontSize: "0.8rem", color: "var(--ink)", fontWeight: 500 }}>
+                Predictive Monitoring · ML
+              </div>
+            </div>
+            <hr className="thin" />
+            <div>
+              <div className="kicker mb-1">Location</div>
+              <div style={{ fontFamily: "var(--font-inter)", fontSize: "0.8rem", color: "var(--ink)", fontWeight: 500 }}>
+                Bangladesh
+              </div>
+            </div>
+          </motion.div>
+        </div>
 
-        {/* Subtext */}
-        <motion.p
+        {/* Rule */}
+        <motion.div
           custom={4}
           initial="hidden"
           animate="visible"
-          variants={fadeUp}
-          className="text-slate-500 text-base max-w-xl mx-auto mb-10"
+          variants={fadeIn}
+          className="mt-8 mb-7"
         >
-          Focused on ESP32-based systems, predictive monitoring, and real-world
-          intelligent automation.
-        </motion.p>
+          <div style={{ borderTop: "2px solid var(--ink)", borderBottom: "1px solid var(--rule)", paddingTop: "4px", paddingBottom: "4px" }} />
+        </motion.div>
 
-        {/* CTA Buttons */}
+        {/* Bottom row: CTA + socials */}
         <motion.div
           custom={5}
           initial="hidden"
           animate="visible"
-          variants={fadeUp}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
+          variants={fadeIn}
+          className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 pb-10"
         >
-          <button
-            onClick={() => scrollTo("#projects")}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-7 py-3.5 rounded-lg font-medium transition-colors duration-200 text-sm"
-          >
-            View Projects
-            <ArrowRight size={16} />
-          </button>
-          <button
-            onClick={() => scrollTo("#contact")}
-            className="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white px-7 py-3.5 rounded-lg font-medium transition-colors duration-200 text-sm"
-          >
-            Contact Me
-            <Mail size={16} />
-          </button>
+          {/* CTA */}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => scrollTo("#projects")}
+              className="flex items-center gap-2 transition-opacity hover:opacity-70 text-sm"
+              style={{
+                fontFamily: "var(--font-inter)",
+                color: "var(--paper)",
+                backgroundColor: "var(--ink)",
+                padding: "0.65rem 1.4rem",
+                fontWeight: 500,
+                letterSpacing: "0.05em",
+              }}
+            >
+              Read Projects
+              <ArrowRight size={14} />
+            </button>
+            <button
+              onClick={() => scrollTo("#contact")}
+              className="flex items-center gap-2 transition-opacity hover:opacity-70 text-sm"
+              style={{
+                fontFamily: "var(--font-inter)",
+                color: "var(--ink)",
+                backgroundColor: "transparent",
+                border: "1px solid var(--ink)",
+                padding: "0.65rem 1.4rem",
+                fontWeight: 500,
+                letterSpacing: "0.05em",
+              }}
+            >
+              Contact
+              <Mail size={14} />
+            </button>
+          </div>
+
+          {/* Socials */}
+          <div className="flex items-center gap-5">
+            <a
+              href="#"
+              aria-label="GitHub"
+              className="transition-opacity hover:opacity-50"
+              style={{ color: "var(--muted)" }}
+            >
+              <Github size={18} />
+            </a>
+            <a
+              href="#"
+              aria-label="LinkedIn"
+              className="transition-opacity hover:opacity-50"
+              style={{ color: "var(--muted)" }}
+            >
+              <Linkedin size={18} />
+            </a>
+            <a
+              href="mailto:shahariar0001@std.bdu.ac.bd"
+              aria-label="Email"
+              className="transition-opacity hover:opacity-50"
+              style={{ color: "var(--muted)" }}
+            >
+              <Mail size={18} />
+            </a>
+          </div>
         </motion.div>
 
-        {/* Social links */}
-        <motion.div
-          custom={6}
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-          className="flex items-center justify-center gap-5"
-        >
-          <a
-            href="#"
-            aria-label="GitHub"
-            className="text-slate-500 hover:text-white transition-colors duration-200"
-          >
-            <Github size={20} />
-          </a>
-          <a
-            href="#"
-            aria-label="LinkedIn"
-            className="text-slate-500 hover:text-white transition-colors duration-200"
-          >
-            <Linkedin size={20} />
-          </a>
-          <a
-            href="mailto:shahariar0001@std.bdu.ac.bd"
-            aria-label="Email"
-            className="text-slate-500 hover:text-white transition-colors duration-200"
-          >
-            <Mail size={20} />
-          </a>
-        </motion.div>
+        {/* Bottom thick rule */}
+        <div style={{ borderBottom: "3px solid var(--ink)" }} />
       </div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 0.6 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-      >
-        <span className="text-xs text-slate-600 tracking-widest uppercase">
-          Scroll
-        </span>
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-          className="w-px h-8 bg-gradient-to-b from-slate-600 to-transparent"
-        />
-      </motion.div>
     </section>
   );
 }

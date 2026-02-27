@@ -4,44 +4,76 @@ import { Github, Linkedin, Mail } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/[0.06] py-10 px-6">
-      <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex flex-col items-center sm:items-start gap-1">
-          <p className="text-white font-semibold text-sm">
-            Ahmed Shahariar Udoy
-          </p>
-          <p className="text-slate-600 text-xs">
-            IoT & Robotics Engineering Student · Bangladesh
-          </p>
+    <footer
+      className="py-8 px-6 md:px-10"
+      style={{ backgroundColor: "var(--paper-dark)", borderTop: "2px solid var(--ink)" }}
+    >
+      <div className="max-w-7xl mx-auto">
+
+        {/* Top colophon row */}
+        <div
+          className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-5"
+          style={{ borderBottom: "1px solid var(--rule)" }}
+        >
+          {/* Publication info */}
+          <div>
+            <div
+              className="leading-none mb-1"
+              style={{
+                fontFamily: "var(--font-playfair)",
+                fontWeight: 900,
+                fontSize: "1.4rem",
+                color: "var(--ink)",
+              }}
+            >
+              Ahmed<span style={{ color: "var(--accent)" }}>.</span>
+            </div>
+            <div className="running-head">
+              IoT &amp; Robotics Engineering · Bangladesh
+            </div>
+          </div>
+
+          {/* Socials */}
+          <div className="flex items-center gap-6">
+            <a
+              href="#"
+              aria-label="GitHub"
+              className="transition-opacity hover:opacity-50 flex items-center gap-1.5"
+              style={{ color: "var(--muted)", textDecoration: "none" }}
+            >
+              <Github size={16} />
+              <span className="byline hidden sm:inline">GitHub</span>
+            </a>
+            <a
+              href="#"
+              aria-label="LinkedIn"
+              className="transition-opacity hover:opacity-50 flex items-center gap-1.5"
+              style={{ color: "var(--muted)", textDecoration: "none" }}
+            >
+              <Linkedin size={16} />
+              <span className="byline hidden sm:inline">LinkedIn</span>
+            </a>
+            <a
+              href="mailto:shahariar0001@std.bdu.ac.bd"
+              aria-label="Email"
+              className="transition-opacity hover:opacity-50 flex items-center gap-1.5"
+              style={{ color: "var(--muted)", textDecoration: "none" }}
+            >
+              <Mail size={16} />
+              <span className="byline hidden sm:inline">Email</span>
+            </a>
+          </div>
         </div>
 
-        <div className="flex items-center gap-5">
-          <a
-            href="#"
-            aria-label="GitHub"
-            className="text-slate-600 hover:text-slate-400 transition-colors"
-          >
-            <Github size={18} />
-          </a>
-          <a
-            href="#"
-            aria-label="LinkedIn"
-            className="text-slate-600 hover:text-slate-400 transition-colors"
-          >
-            <Linkedin size={18} />
-          </a>
-          <a
-            href="mailto:shahariar0001@std.bdu.ac.bd"
-            aria-label="Email"
-            className="text-slate-600 hover:text-slate-400 transition-colors"
-          >
-            <Mail size={18} />
-          </a>
+        {/* Bottom colophon */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 pt-4">
+          <span className="folio">
+            © {new Date().getFullYear()} Ahmed Shahariar Udoy. All rights reserved.
+          </span>
+          <span className="folio">
+            Built with Next.js · Deployed via GitHub Pages
+          </span>
         </div>
-
-        <p className="text-slate-700 text-xs">
-          © {new Date().getFullYear()} Ahmed Shahariar Udoy
-        </p>
       </div>
     </footer>
   );

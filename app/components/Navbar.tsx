@@ -15,6 +15,7 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [dateStr, setDateStr] = useState("");
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -22,79 +23,143 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const d = new Date();
+    setDateStr(
+      d.toLocaleDateString("en-US", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    );
+  }, []);
+
   const handleNavClick = (href: string) => {
     setMobileOpen(false);
-    const target = document.querySelector(href);
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth" });
-    }
+    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <motion.header
-      initial={{ y: -80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-[#0b0f19]/90 backdrop-blur-md border-b border-white/5"
-          : "bg-transparent"
-      }`}
+    <header
+      className="fixed top-0 left-0 right-0 z-50 transition-shadow duration-300"
+      style={{
+        backgroundColor: "var(--paper)",
+        boxShadow: scrolled ? "0 1px 6px rgba(0,0,0,0.08)" : "none",
+      }}
     >
-      <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-        {/* Logo */}
+      {/* Top dateline bar */}
+      <div
+        className="hidden md:flex items-center justify-between px-8 py-1"
+        style={{ borderBottom: "1px solid var(--rule)", backgroundColor: "var(--paper-dark)" }}
+      >
+        <span className="running-head">{dateStr}</span>
+        <span className="running-head tracking-[0.25em]">
+          IoT &amp; Robotics Engineering · Vol. I, No. 1
+        </span>
+        <span className="running-head">Est. 2024 · Bangladesh</span>
+      </div>
+
+      {/* Masthead */}
+      <div
+        className="flex flex-col items-center py-4 px-8"
+        style={{ borderBottom: "3px solid var(--ink)" }}
+      >
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="text-white font-semibold text-lg tracking-tight hover:text-blue-400 transition-colors"
+          className="flex flex-col items-center gap-0.5 hover:opacity-70 transition-opacity"
         >
-          Ahmed<span className="text-blue-400">.</span>
-        </button>
-
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <button
-              key={link.href}
-              onClick={() => handleNavClick(link.href)}
-              className="text-sm text-slate-400 hover:text-white transition-colors duration-200 font-medium"
-            >
-              {link.label}
-            </button>
-          ))}
-          <button
-            onClick={() => handleNavClick("#contact")}
-            className="text-sm bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg transition-colors duration-200 font-medium"
+          <span
+            className="text-3xl md:text-5xl font-black tracking-tight leading-none"
+            style={{ fontFamily: "var(--font-playfair)", color: "var(--ink)" }}
           >
-            Hire Me
-          </button>
-        </nav>
-
-        {/* Mobile toggle */}
-        <button
-          className="md:hidden text-slate-400 hover:text-white transition-colors"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
-        >
-          {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+            Ahmed<span style={{ color: "var(--accent)" }}>.</span>
+          </span>
+          <span
+            className="running-head mt-1"
+            style={{ letterSpacing: "0.3em" }}
+          >
+            Portfolio Review · Intelligent Systems Edition
+          </span>
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Desktop nav strip */}
+      <nav
+        className="hidden md:flex items-center justify-center"
+        style={{ borderBottom: "1px solid var(--rule)" }}
+      >
+        {navLinks.map((link, i) => (
+          <button
+            key={link.href}
+            onClick={() => handleNavClick(link.href)}
+            className="text-xs tracking-[0.18em] uppercase px-6 py-2 transition-opacity hover:opacity-50"
+            style={{
+              fontFamily: "var(--font-inter)",
+              color: "var(--ink)",
+              borderRight: i < navLinks.length - 1 ? "1px solid var(--rule)" : "none",
+              fontWeight: 500,
+            }}
+          >
+            {link.label}
+          </button>
+        ))}
+        <button
+          onClick={() => handleNavClick("#contact")}
+          className="text-xs tracking-[0.18em] uppercase px-6 py-2 transition-opacity hover:opacity-80"
+          style={{
+            fontFamily: "var(--font-inter)",
+            color: "var(--paper)",
+            backgroundColor: "var(--accent)",
+            borderLeft: "1px solid var(--rule)",
+            fontWeight: 600,
+          }}
+        >
+          Hire Me
+        </button>
+      </nav>
+
+      {/* Mobile top strip */}
+      <div
+        className="md:hidden flex items-center justify-between px-5 py-2"
+        style={{ borderTop: "1px solid var(--rule)" }}
+      >
+        <span className="running-head">IoT Engineer · Bangladesh</span>
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          aria-label="Toggle menu"
+          className="p-1 transition-opacity hover:opacity-60"
+          style={{ color: "var(--ink)" }}
+        >
+          {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+      </div>
+
+      {/* Mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25 }}
-            className="md:hidden bg-[#0b0f19]/95 backdrop-blur-md border-b border-white/5"
+            transition={{ duration: 0.2 }}
+            style={{
+              backgroundColor: "var(--paper-dark)",
+              borderBottom: "2px solid var(--ink)",
+            }}
           >
-            <nav className="flex flex-col px-6 pb-6 pt-2 gap-4">
-              {navLinks.map((link) => (
+            <nav className="flex flex-col px-6 py-2">
+              {navLinks.map((link, i) => (
                 <button
                   key={link.href}
                   onClick={() => handleNavClick(link.href)}
-                  className="text-left text-sm text-slate-400 hover:text-white transition-colors py-2"
+                  className="text-left text-xs tracking-[0.18em] uppercase py-3 transition-opacity hover:opacity-50"
+                  style={{
+                    fontFamily: "var(--font-inter)",
+                    color: "var(--ink)",
+                    borderBottom: i < navLinks.length - 1 ? "1px solid var(--rule)" : "none",
+                    fontWeight: 500,
+                  }}
                 >
                   {link.label}
                 </button>
@@ -103,6 +168,6 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.header>
+    </header>
   );
 }

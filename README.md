@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ahmed Shahariar Udoy — Portfolio
 
-## Getting Started
+Magazine-style personal portfolio built with Next.js, Tailwind CSS, and Framer Motion.
 
-First, run the development server:
+## Design
+
+Editorial magazine aesthetic with:
+- Warm cream paper background (`#f5f0e8`)
+- Playfair Display serif headlines
+- EB Garamond body copy
+- Drop caps, pull quotes, column rules
+- Section numbering (I–V)
+- Ink-on-paper color palette with editorial red accents
+
+## Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Build (Static Export)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+```
 
-## Learn More
+Outputs to `./out/` — ready for any static host.
 
-To learn more about Next.js, take a look at the following resources:
+## Deploy to GitHub Pages
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Automatic (GitHub Actions)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Push this repository to GitHub
+2. Go to **Settings → Pages**
+3. Under **Source**, select **GitHub Actions**
+4. Push to `main` — the workflow at `.github/workflows/deploy.yml` will build and deploy automatically
 
-## Deploy on Vercel
+Your site will be live at: `https://<your-username>.github.io/<repo-name>/`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+> If deploying to a subdirectory (e.g. `/<repo-name>/`), add `basePath` to `next.config.ts`:
+> ```ts
+> basePath: "/<repo-name>",
+> assetPrefix: "/<repo-name>/",
+> ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Manual
+
+```bash
+npm run build
+# Upload the ./out folder contents to your Pages branch
+```
+
+## Project Structure
+
+```
+app/
+  components/
+    Navbar.tsx       # Magazine masthead with dateline
+    Hero.tsx         # Cover story layout
+    About.tsx        # Three-column editorial with pull quote
+    Projects.tsx     # Newspaper article grid
+    Skills.tsx       # Catalog table layout
+    Education.tsx    # Credentials card
+    Contact.tsx      # Correspondence form
+    Footer.tsx       # Colophon
+  data/
+    projects.ts      # Project data
+    skills.ts        # Skills data
+  globals.css        # Magazine typography & CSS variables
+  layout.tsx
+  page.tsx
+.github/workflows/deploy.yml   # GitHub Pages CI/CD
+public/.nojekyll               # Prevents Jekyll processing
+```
